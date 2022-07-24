@@ -21,7 +21,7 @@ export class ChannelService {
   }
   async findAll(query):Promise<any>{
     const list = await this.channelRepository.find({relations:['messages'],order:{
-      'name':'DESC'
+      'createdAt':'DESC'
     }})
 
     return {list}

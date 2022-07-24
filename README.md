@@ -3,11 +3,25 @@
 
 
 # logs
+v0.0.2
+```bash
+1.add messageApi
+2.add interface validate
+3.add messageListApi
+```
+
 v0.0.1
 ```bash
 1.add swaggerApi
 2.add githook <husky>
 ```
+
+todolist
+```bash
+1.add logInfo
+2.add docker
+```
+
 
 
 ## Description
