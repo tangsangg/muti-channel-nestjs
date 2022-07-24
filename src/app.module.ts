@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {ChannelModule}  from './createChannel/channel.module'
 import { Connection } from 'typeorm';
-import { ChannelEntiy } from './createChannel/channel.entity';
+import { ChannelEntity } from './createChannel/channel.entity';
+import { MessageModule } from './createMessage/message.module';
+import { MessageEntity } from './createMessage/message.entity';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { ChannelEntiy } from './createChannel/channel.entity';
         "username":"root",
         "password":"root",
         "database":"nestjsforapi",
-        "entities": [ChannelEntiy],
+        "entities": [ChannelEntity,MessageEntity],
         "synchronize":true
       }
     ),
-    ChannelModule
+    ChannelModule,
+    MessageModule
   ],
   controllers: [AppController],
   providers:[AppService]

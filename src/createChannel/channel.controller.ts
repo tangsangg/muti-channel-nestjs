@@ -1,4 +1,4 @@
-import {Controller,Body,Post} from '@nestjs/common'
+import {Controller,Body,Post,Get, Query} from '@nestjs/common'
 import { ChannelService } from './channel.service'
 import {createChannelDto} from './dto/create-channel.dto'
 import  {
@@ -22,5 +22,9 @@ export class ChannelController{
   @Post('/create')
   async create(@Body() createDto:createChannelDto){
       return await this.channelService.creatChannel(createDto)
+  }
+  @Get('/list')
+  async findAll(@Query() query):Promise<any>{
+    return await this.channelService.findAll(query)
   }
 }
