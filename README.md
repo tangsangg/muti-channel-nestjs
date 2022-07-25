@@ -3,6 +3,13 @@
 
 
 # logs
+
+v0.0.3
+```bash
+1.add swaggerApi
+2.add pagination
+```
+
 v0.0.2
 ```bash
 1.add messageApi

@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Connection, getRepository, Repository} from "typeorm"
+import {Repository,getRepository} from "typeorm"
 import {createChannelDto} from './dto/create-channel.dto'
+import {selectChannelDto} from './dto/select-channel.dto'
+import { ChannelListRo } from "./channel.interface";
 import { ChannelEntity } from "./channel.entity";
 
 
@@ -19,11 +21,20 @@ export class ChannelService {
     const newChannel = await this.channelRepository.save(channel)
     return newChannel
   }
-  async findAll(query):Promise<any>{
-    const list = await this.channelRepository.find({relations:['messages'],order:{
-      'createdAt':'DESC'
-    }})
-
-    return {list}
+  async findAll(query:selectChannelDto):Promise<ChannelListRo>{
+    const qb = await getRepository(ChannelEntity)
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.messages','message')
+    .where("user.id = :id",{id:query.channelId})
+    if('limit' in query) {
+      qb.limit(query.limit)
+    }
+    if('offset' in query) {
+      qb.offset(query.offset)
+    }
+    const listCount = await qb.getCount()
+    qb.orderBy('message.createdAt','DESC')
+    const list =await qb.getMany()
+    return {list,listCount}
   }
 }
