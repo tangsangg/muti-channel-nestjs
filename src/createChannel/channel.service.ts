@@ -5,6 +5,7 @@ import {createChannelDto} from './dto/create-channel.dto'
 import {selectChannelDto} from './dto/select-channel.dto'
 import { ChannelListRo } from "./channel.interface";
 import { ChannelEntity } from "./channel.entity";
+import { MessageEntity } from "../createMessage/message.entity";
 
 
 @Injectable()
@@ -21,19 +22,13 @@ export class ChannelService {
     const newChannel = await this.channelRepository.save(channel)
     return newChannel
   }
-  async findAll(query:selectChannelDto):Promise<ChannelListRo>{
-    const qb = await getRepository(ChannelEntity)
+  async findAll(query:selectChannelDto):Promise<any>{
+    const qb = await getRepository(MessageEntity)
     .createQueryBuilder('user')
-    .leftJoinAndSelect('user.messages','message')
-    .where("user.id = :id",{id:query.channelId})
-    if('limit' in query) {
-      qb.limit(query.limit)
-    }
-    if('offset' in query) {
-      qb.offset(query.offset)
-    }
+    .take(query.pagesize)
+    .skip((query.p-1)*query.pagesize)
     const listCount = await qb.getCount()
-    qb.orderBy('message.createdAt','DESC')
+    qb.orderBy('createdAt','DESC')
     const list =await qb.getMany()
     return {list,listCount}
   }

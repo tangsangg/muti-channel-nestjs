@@ -1,8 +1,18 @@
 ## muti-channel-nestjs
 
-
+v0.0.4
+```bash
+1./api/create (create channel)
+2./api/message (create message)
+3./api/list  (select messagelist)
+```
 
 # logs
+
+v0.0.4
+```bash
+1.fix pagination
+```
 
 v0.0.3
 ```bash

@@ -1,5 +1,6 @@
-import {IsNotEmpty} from 'class-validator'
+import {IsNotEmpty,IsNumber,IsOptional} from 'class-validator'
 import {ApiProperty} from '@nestjs/swagger'
+import { Type } from 'class-transformer';
 
 export class selectChannelDto {
   @ApiProperty(
@@ -10,9 +11,15 @@ export class selectChannelDto {
   )
   @IsNotEmpty()
   readonly channelId:number;
-  readonly limit?:number;
-  readonly offset?:number
-  readonly p?:number;
-  readonly pageSize?:number;
-  readonly type?:string
+  readonly type?:string;
+  @IsNumber()
+  @Type(()=>Number)
+  @IsOptional()
+  p=1;
+
+  @IsNumber()
+  @Type(()=>Number)
+  @IsOptional()
+  pagesize=10;
+  
 }
